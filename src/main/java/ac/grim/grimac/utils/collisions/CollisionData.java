@@ -177,7 +177,7 @@ public enum CollisionData {
 
     SKULL(new SimpleCollisionBox(0.25F, 0.0F, 0.25F, 0.75F, 0.5F, 0.75F, false),
             StateTypes.CREEPER_HEAD, StateTypes.ZOMBIE_HEAD, StateTypes.DRAGON_HEAD, StateTypes.PLAYER_HEAD,
-            StateTypes.SKELETON_SKULL, StateTypes.WITHER_SKELETON_SKULL),
+            StateTypes.SKELETON_SKULL, StateTypes.WITHER_SKELETON_SKULL, StateTypes.PIGLIN_HEAD),
 
     // Overwrite previous SKULL enum for legacy, where head and wall skull isn't separate
     WALL_SKULL((player, version, data, x, y, z) -> {
@@ -193,7 +193,7 @@ public enum CollisionData {
                 return new SimpleCollisionBox(0.0F, 0.25F, 0.25F, 0.5F, 0.75F, 0.75F, false);
         }
     }, StateTypes.CREEPER_WALL_HEAD, StateTypes.DRAGON_WALL_HEAD, StateTypes.PLAYER_WALL_HEAD, StateTypes.ZOMBIE_WALL_HEAD,
-            StateTypes.SKELETON_WALL_SKULL, StateTypes.WITHER_SKELETON_WALL_SKULL),
+            StateTypes.SKELETON_WALL_SKULL, StateTypes.WITHER_SKELETON_WALL_SKULL, StateTypes.PIGLIN_WALL_HEAD),
 
     BANNER(new HexCollisionBox(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D),
             BlockTags.BANNERS.getStates().toArray(new StateType[0])),
@@ -292,6 +292,8 @@ public enum CollisionData {
 
     GRASS_FERN(new HexCollisionBox(2.0D, 0.0D, 2.0D, 14.0D, 13.0D, 14.0D),
             StateTypes.GRASS, StateTypes.FERN),
+
+    GRASS(new HexCollisionBox(0, 0, 0, 1, 1, 1), StateTypes.GRASS),
 
     TALL_GRASS(new SimpleCollisionBox(0, 0, 0, 1, 1, 1, true), StateTypes.TALL_GRASS),
 
@@ -1002,6 +1004,8 @@ public enum CollisionData {
 
     SCULK_SENSOR(new HexCollisionBox(0.0, 0.0, 0.0, 16.0, 8.0, 16.0), StateTypes.SCULK_SENSOR),
 
+    CALIBRATED_SCULK_SENSOR(new HexCollisionBox(0.0, 0.0, 0.0, 16.0, 8.0, 16.0), StateTypes.CALIBRATED_SCULK_SENSOR),
+
     BIG_DRIPLEAF((player, version, data, x, y, z) -> {
         if (version.isOlderThanOrEquals(ClientVersion.V_1_16_4))
             return new SimpleCollisionBox(0, 0, 0, 1, 1, 1, true);
@@ -1119,10 +1123,30 @@ public enum CollisionData {
         }
     }, StateTypes.MANGROVE_PROPAGULE),
 
-    SCULK_SHRIKER(new HexCollisionBox(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), StateTypes.SCULK_SHRIEKER),
-
+    SCULK_SHRIEKER(new HexCollisionBox(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D), StateTypes.SCULK_SHRIEKER),
     FROGSPAWN(new HexCollisionBox(0.0D, 0.0D, 0.0D, 16.0D, 1.5D, 16.0D), StateTypes.FROGSPAWN),
 
+    SNIFFER_EGG(new HexCollisionBox(1.0D, 0.0D, 2.0D, 15.0D, 16.0D, 14.0D), StateTypes.SNIFFER_EGG),
+
+    // This is wrong.
+    PITCHER_PLANT(((player, version, data, x, y, z) -> {
+        switch (data.getAge()) {
+            case 0:
+                return new HexCollisionBox(5.0D, -1.0D, 5.0D, 11.0D, 3.0D, 11.0D);
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            default:
+                return new HexCollisionBox(3.0D, -1.0D, 3.0D, 13.0D, 5.0D, 13.0D);
+        }
+    }), StateTypes.PITCHER_PLANT),
+
+    TORCHFLOWER(new HexCollisionBox(8.0D, 0.0D, 8.0D, 15.2D, 16D, 15.2D), StateTypes.TORCHFLOWER),
+
+    TORCHFLOWER_CROP(new HexCollisionBox(8.0D, 0.0D, 8.0D, 15.2D, 16D, 15.2D), StateTypes.TORCHFLOWER_CROP),
+
+    DECORATED_POT(new HexCollisionBox(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D), StateTypes.DECORATED_POT),
     NONE(NoCollisionBox.INSTANCE, StateTypes.AIR, StateTypes.LIGHT),
 
     DEFAULT(new SimpleCollisionBox(0, 0, 0, 1, 1, 1, true), StateTypes.STONE);

@@ -1,9 +1,10 @@
 name: GrimAC
-version: 2.3.40
+version: 2.4.0
 main: ac.grim.grimac.GrimAC
 folia-supported: true
-description: "Libre simulation anticheat designed for 1.19 with 1.8-1.19 support, powered by PacketEvents 2.0."
+description: "Libre simulation anticheat designed for 1.20, powered by PacketEvents 2.0."
 author: GrimAC
+api-version: "1.20"
 permissions:
   grim.alerts:
     description: Receive alerts for violations
@@ -32,7 +33,6 @@ permissions:
   grim.sendalert:
     description: Send cheater alert
     default: op
-api-version: 1.13
 softdepend:
  - ProtocolLib
  - ProtocolSupport
