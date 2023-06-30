@@ -60,10 +60,11 @@ public class PredictionEngine {
     public void guessBestMovement(float speed, GrimPlayer player) {
         Set<VectorData> init = fetchPossibleStartTickVectors(player);
 
-        if (player.uncertaintyHandler.influencedByBouncyBlock()) {
+        // this logic causes issues if applied to other bouncy blocks (beds)
+        if (player.uncertaintyHandler.isSteppingOnSlime || player.uncertaintyHandler.wasSteppingOnSlime) {
             for (VectorData data : init) {
                 // Try to get the vector as close to zero as possible to give the best chance at 0.03...
-                Vector toZeroVec = new PredictionEngine().handleStartingVelocityUncertainty(player, data, new Vector(0, -1000000000, 0)); // Downwards without overflow risk
+                Vector toZeroVec = this.handleStartingVelocityUncertainty(player, data, new Vector(0, -1000000000, 0)); // Downwards without overflow risk
 
                 player.uncertaintyHandler.nextTickSlimeBlockUncertainty = Math.max(Math.abs(toZeroVec.getY()), player.uncertaintyHandler.nextTickSlimeBlockUncertainty);
             }
