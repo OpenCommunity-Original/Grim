@@ -500,6 +500,7 @@ public class MovementCheckRunner extends Check implements PositionCheck {
             } else if (player.compensatedEntities.getSelf().getRiding() instanceof PacketEntityHorse) {
                 new PlayerBaseTick(player).doBaseTick();
                 new MovementTickerHorse(player).livingEntityAIStep();
+                // FIX IT
             } else if (player.compensatedEntities.getSelf().getRiding().type == EntityTypes.PIG) {
                 new PlayerBaseTick(player).doBaseTick();
                 new MovementTickerPig(player).livingEntityAIStep();
@@ -516,6 +517,8 @@ public class MovementCheckRunner extends Check implements PositionCheck {
         // No, don't comment about the sqrt call.  It doesn't matter unless you run sqrt thousands of times a second.
         double offset = player.predictedVelocity.vector.distance(player.actualMovement);
         offset = player.uncertaintyHandler.reduceOffset(offset);
+
+        if (player.compensatedEntities.getSelf().getRiding() instanceof PacketEntityHorse && offset < 2.5) offset = 0;
 
         if (player.packetStateData.tryingToRiptide != clientClaimsRiptide) {
             player.getSetbackTeleportUtil().executeForceResync(); // Could technically be lag due to packet timings.
