@@ -76,13 +76,13 @@ public class TimerCheck extends Check implements PacketCheck {
     public void doCheck(final PacketReceiveEvent event) {
         long diff = timerBalanceRealTime - System.nanoTime();
         if (diff > 0) {
-            if (flag(true, false, "ahead=" + TimeUnit.NANOSECONDS.toMillis(diff) + "ms")) {
-                // Cancel the packet
-                if (shouldModifyPackets()) {
+            if (flag(true, false, "ahead=" + TimeUnit.NANOSECONDS.toMillis(diff) + "ms")) { // we setback below
+                if (getViolations() > getSetbackVL()) {
+                    // Cancel the packet
                     event.setCancelled(true);
                     player.onPacketCancel();
+                    player.getSetbackTeleportUtil().executeNonSimulatingSetback();
                 }
-                player.getSetbackTeleportUtil().executeNonSimulatingSetback();
             }
 
             // Reset the violation by 1 movement
