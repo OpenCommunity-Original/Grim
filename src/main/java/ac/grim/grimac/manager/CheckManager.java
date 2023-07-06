@@ -7,6 +7,7 @@ import ac.grim.grimac.checks.impl.aim.processor.AimProcessor;
 import ac.grim.grimac.checks.impl.badpackets.*;
 import ac.grim.grimac.checks.impl.baritone.Baritone;
 import ac.grim.grimac.checks.impl.combat.Reach;
+import ac.grim.grimac.checks.impl.combat.UseHit;
 import ac.grim.grimac.checks.impl.crash.*;
 import ac.grim.grimac.checks.impl.exploit.ExploitA;
 import ac.grim.grimac.checks.impl.exploit.ExploitB;
@@ -56,6 +57,7 @@ public class CheckManager {
         // Include post checks in the packet check too
         packetChecks = new ImmutableClassToInstanceMap.Builder<PacketCheck>()
                 .put(Reach.class, new Reach(player))
+                .put(UseHit.class, new UseHit(player))
                 .put(PacketEntityReplication.class, new PacketEntityReplication(player))
                 .put(PacketChangeGameState.class, new PacketChangeGameState(player))
                 .put(CompensatedInventory.class, new CompensatedInventory(player))
@@ -79,6 +81,7 @@ public class CheckManager {
                 .put(BadPacketsN.class, new BadPacketsN(player))
                 .put(BadPacketsP.class, new BadPacketsP(player))
                 .put(BadPacketsQ.class, new BadPacketsQ(player))
+                .put(BadPacketsR.class, new BadPacketsR(player))
                 .put(PostCheck.class, new PostCheck(player))
                 .put(FastBreak.class, new FastBreak(player))
                 .put(NoSlowB.class, new NoSlowB(player))
