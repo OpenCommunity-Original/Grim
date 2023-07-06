@@ -64,7 +64,7 @@ public class Check implements AbstractCheck {
         if (player.disableGrim || (experimental && !GrimAPI.INSTANCE.getConfigManager().isExperimentalChecks()))
             return false; // Avoid calling event if disabled
 
-        FlagEvent event = new FlagEvent(player, this, verbose);
+        FlagEvent event = new FlagEvent(player, this);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) return false;
 
@@ -111,4 +111,3 @@ public class Check implements AbstractCheck {
         return offset > 0.001 ? String.format("%.5f", offset) : String.format("%.2E", offset);
     }
 }
-
